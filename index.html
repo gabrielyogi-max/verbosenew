@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperium Romanum</title>
+    
+    <!-- Google Fonts: Cinzel for that Roman inscription look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="roman-header">
+        <div class="header-content">
+            <h1>Senatus Populusque Romanus</h1>
+            <p>Um mapa interativo da glória de Roma</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="map-frame">
+            <div id="map"></div>
+        </div>
+
+        <section class="info-panel">
+            <h2>Sobre o Império</h2>
+            <p>O Império Romano (latim: Imperium Romanum) foi o período pós-republicano da antiga civilização romana, caracterizado por uma forma de governo autocrática liderada por um imperador e por extensas possessões territoriais em volta do mar Mediterrâneo na Europa, África e Ásia.</p>
+        </section>
+    </main>
+
+    <footer class="roman-footer">
+        <p>Criado para o Imperador &copy; MMXIV</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <script src="script.js"></script>
+</body>
+</html>
