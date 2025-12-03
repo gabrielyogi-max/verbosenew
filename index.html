@@ -3,36 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050505">
+    <meta name="theme-color" content="#101418">
     <link rel="manifest" href="manifest.json">
-    <title>Nebula Swarm - Experiência Visual</title>
+    <title>VANTAGE // Sistema de Inteligência</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="particle-canvas"></canvas>
+    <canvas id="network-canvas"></canvas>
 
-    <div class="content-wrapper">
+    <div class="interface-layer">
         <header>
-            <h1 class="glitch" data-text="NEBULA">NEBULA</h1>
-            <p class="subtitle">Interação de Partículas & Design Imersivo</p>
+            <div class="brand">
+                <div class="logo-mark"></div>
+                <span>VANTAGE</span>
+            </div>
+            <nav>
+                <a href="#">PLATAFORMA</a>
+                <a href="#">DADOS</a>
+                <a href="#">SOLUÇÕES</a>
+            </nav>
         </header>
         
         <main>
-            <div class="card">
-                <h2>Conectividade</h2>
-                <p>Mova o mouse para interagir com o enxame digital. Sinta a fluidez da rede neural simulada.</p>
-                <button class="glow-on-hover">Explorar</button>
-            </div>
-            <div class="card">
-                <h2>Tecnologia</h2>
-                <p>Renderização em tempo real utilizando HTML5 Canvas e JavaScript puro para máxima performance.</p>
-                <button class="glow-on-hover">Saiba Mais</button>
-            </div>
+            <section class="hero">
+                <div class="hero-content">
+                    <p class="mono-label">SISTEMA OPERACIONAL CENTRAL</p>
+                    <h1>Inteligência Decisiva em Escala Global.</h1>
+                    <p class="hero-desc">Integre dados, decisões e operações em uma única estrutura unificada. Transforme complexidade em clareza.</p>
+                    <div class="cta-group">
+                        <button class="btn-primary">SOLICITAR DEMO</button>
+                        <button class="btn-secondary">VER DOCUMENTAÇÃO</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <div class="card-header">
+                        <span class="icon">⦿</span>
+                        <span class="card-title">INTEGRAÇÃO</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>98.5%</h3>
+                        <p>Confiabilidade de Ingestão</p>
+                        <div class="data-vis-bar"><div class="fill" style="width: 98%"></div></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-header">
+                        <span class="icon">✣</span>
+                        <span class="card-title">ANÁLISE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>24ms</h3>
+                        <p>Latência de Processamento</p>
+                        <div class="data-vis-bar"><div class="fill" style="width: 85%"></div></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-header">
+                        <span class="icon">◈</span>
+                        <span class="card-title">SEGURANÇA</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>NÍVEL 5</h3>
+                        <p>Protocolos Ativos</p>
+                        <div class="data-vis-bar"><div class="fill" style="width: 100%"></div></div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <footer>
-            <p>&copy; 2023 Nebula Project. Feito para impressionar.</p>
+            <div class="status-bar">
+                <span>STATUS DO SISTEMA: <span class="status-ok">ONLINE</span></span>
+                <span class="mono-label">V.2.4.0-STABLE</span>
+            </div>
         </footer>
     </div>
 
@@ -40,9 +87,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('Service Worker Registered', reg))
-                    .catch(err => console.log('Service Worker Registration Failed', err));
+                navigator.serviceWorker.register('./service-worker.js');
             });
         }
     </script>
