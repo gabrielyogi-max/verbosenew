@@ -8,7 +8,7 @@ let particlesArray;
 let mouse = {
     x: null,
     y: null,
-    radius: 150
+    radius: 250 // Increased radius for better gravity effect
 }
 
 // Handle window resize
@@ -30,6 +30,22 @@ window.addEventListener('mouseout', function() {
     mouse.y = undefined;
 });
 
+// Handle touch events for mobile
+window.addEventListener('touchstart', function(event) {
+    mouse.x = event.touches[0].clientX;
+    mouse.y = event.touches[0].clientY;
+});
+
+window.addEventListener('touchmove', function(event) {
+    mouse.x = event.touches[0].clientX;
+    mouse.y = event.touches[0].clientY;
+});
+
+window.addEventListener('touchend', function() {
+    mouse.x = undefined;
+    mouse.y = undefined;
+});
+
 class Particle {
     constructor(x, y, directionX, directionY, size, color) {
         this.x = x;
@@ -38,6 +54,9 @@ class Particle {
         this.directionY = directionY;
         this.size = size;
         this.color = color;
+        // Store original speed to limit max velocity
+        this.speedX = directionX;
+        this.speedY = directionY;
     }
 
     // Method to draw individual particle
@@ -50,7 +69,7 @@ class Particle {
 
     // Check particle position, check mouse position, move the particle, draw the particle
     update() {
-        // Check if particle is still within canvas
+        // Wall collisions - bounce off walls
         if (this.x > canvas.width || this.x < 0) {
             this.directionX = -this.directionX;
         }
@@ -58,25 +77,39 @@ class Particle {
             this.directionY = -this.directionY;
         }
 
-        // Check collision detection - mouse position / particle position
+        // Mouse interaction (Gravity)
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx*dx + dy*dy);
         
-        if (distance < mouse.radius + this.size) {
-            if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
-                this.x += 10;
-            }
-            if (mouse.x > this.x && this.x > this.size * 10) {
-                this.x -= 10;
-            }
-            if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
-                this.y += 10;
-            }
-            if (mouse.y > this.y && this.y > this.size * 10) {
-                this.y -= 10;
-            }
+        // If mouse is on screen and particle is within radius
+        if (mouse.x != undefined && distance < mouse.radius) {
+            // Calculate force vector towards mouse
+            const forceDirectionX = dx / distance;
+            const forceDirectionY = dy / distance;
+            
+            // The closer it is, the stronger the pull (gravity)
+            // But cap it so they don't explode
+            const force = (mouse.radius - distance) / mouse.radius; 
+            const directionMultiplier = 0.6; // Adjust strength of gravity
+
+            this.directionX += forceDirectionX * force * directionMultiplier;
+            this.directionY += forceDirectionY * force * directionMultiplier;
+        } 
+
+        // Apply friction to stop them from accelerating infinitely
+        // And slowly return to original chaotic movement if left alone? 
+        // Or just dampen the velocity.
+        // Let's limit the max speed so they don't vanish.
+        
+        const maxSpeed = 5;
+        // Clamp speed
+        const speed = Math.sqrt(this.directionX**2 + this.directionY**2);
+        if (speed > maxSpeed) {
+            this.directionX = (this.directionX / speed) * maxSpeed;
+            this.directionY = (this.directionY / speed) * maxSpeed;
         }
+
 
         // Move particle
         this.x += this.directionX;
@@ -111,6 +144,11 @@ function init() {
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    // Fade effect for trails? The user mentioned "efeito visuais fodas" (cool visual effects).
+    // Let's keep it simple with clearRect for now to ensure performance, 
+    // unless "trails" are specifically requested again. 
+    // The previous prompt removed lines, so clean dots are expected.
 
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
