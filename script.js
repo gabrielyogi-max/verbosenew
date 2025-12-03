@@ -11,10 +11,10 @@ let mouse = {
     radius: 250 // Increased radius for better gravity effect
 }
 
-// Cache Parallax Elements
-const shape1 = document.querySelector('.shape-1');
-const shape2 = document.querySelector('.shape-2');
-const shape3 = document.querySelector('.shape-3');
+let parallax = {
+    x: 0,
+    y: 0
+}
 
 // Handle window resize
 window.addEventListener('resize', function() {
@@ -29,12 +29,13 @@ window.addEventListener('mousemove', function(event) {
     mouse.y = event.clientY;
     
     // Parallax Effect
-    let x = (window.innerWidth - event.pageX * 2) / 100;
-    let y = (window.innerHeight - event.pageY * 2) / 100;
+    // Calculate displacement from center
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
     
-    if(shape1) shape1.style.transform = `translateX(${x}px) translateY(${y}px)`;
-    if(shape2) shape2.style.transform = `translateX(${-x}px) translateY(${-y}px) rotate(45deg)`;
-    if(shape3) shape3.style.transform = `translateX(${x*2}px) translateY(${y*2}px)`;
+    // The further from center, the larger the shift
+    parallax.x = (centerX - mouse.x) / 20; // Divider controls sensitivity
+    parallax.y = (centerY - mouse.y) / 20;
 });
 
 // Handle mouse out
@@ -54,12 +55,11 @@ window.addEventListener('touchmove', function(event) {
     mouse.y = event.touches[0].clientY;
     
     // Parallax for touch
-    let x = (window.innerWidth - event.touches[0].clientX * 2) / 100;
-    let y = (window.innerHeight - event.touches[0].clientY * 2) / 100;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
     
-    if(shape1) shape1.style.transform = `translateX(${x}px) translateY(${y}px)`;
-    if(shape2) shape2.style.transform = `translateX(${-x}px) translateY(${-y}px) rotate(45deg)`;
-    if(shape3) shape3.style.transform = `translateX(${x*2}px) translateY(${y*2}px)`;
+    parallax.x = (centerX - mouse.x) / 20;
+    parallax.y = (centerY - mouse.y) / 20;
 });
 
 window.addEventListener('touchend', function() {
@@ -84,7 +84,18 @@ class Particle {
     // Method to draw individual particle
     draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        // Add parallax offset based on size (depth)
+        // Larger particles are "closer", so they move MORE (standard parallax)
+        // Or LESS? 
+        // In standard parallax:
+        // Foreground moves fast. Background moves slow.
+        // If size = closeness, then:
+        // shift = parallax * size * factor
+        
+        let pX = parallax.x * this.size * 0.5;
+        let pY = parallax.y * this.size * 0.5;
+        
+        ctx.arc(this.x + pX, this.y + pY, this.size, 0, Math.PI * 2, false);
         ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`; // Dynamic color
         ctx.fill();
     }
