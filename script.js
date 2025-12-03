@@ -11,6 +11,11 @@ let mouse = {
     radius: 250 // Increased radius for better gravity effect
 }
 
+// Cache Parallax Elements
+const shape1 = document.querySelector('.shape-1');
+const shape2 = document.querySelector('.shape-2');
+const shape3 = document.querySelector('.shape-3');
+
 // Handle window resize
 window.addEventListener('resize', function() {
     width = canvas.width = window.innerWidth;
@@ -20,14 +25,10 @@ window.addEventListener('resize', function() {
 
 // Handle mouse movement and Parallax
 window.addEventListener('mousemove', function(event) {
-    mouse.x = event.x;
-    mouse.y = event.y;
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
     
     // Parallax Effect
-    const shape1 = document.querySelector('.shape-1');
-    const shape2 = document.querySelector('.shape-2');
-    const shape3 = document.querySelector('.shape-3');
-    
     let x = (window.innerWidth - event.pageX * 2) / 100;
     let y = (window.innerHeight - event.pageY * 2) / 100;
     
@@ -53,10 +54,6 @@ window.addEventListener('touchmove', function(event) {
     mouse.y = event.touches[0].clientY;
     
     // Parallax for touch
-    const shape1 = document.querySelector('.shape-1');
-    const shape2 = document.querySelector('.shape-2');
-    const shape3 = document.querySelector('.shape-3');
-    
     let x = (window.innerWidth - event.touches[0].clientX * 2) / 100;
     let y = (window.innerHeight - event.touches[0].clientY * 2) / 100;
     
@@ -78,6 +75,7 @@ class Particle {
         this.directionY = directionY;
         this.size = size;
         this.color = color;
+        this.hue = Math.random() * 360; // Individual hue for each particle
         // Store original speed to limit max velocity
         this.speedX = directionX;
         this.speedY = directionY;
@@ -87,7 +85,7 @@ class Particle {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`; // Dynamic color
+        ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`; // Dynamic color
         ctx.fill();
     }
 
@@ -134,6 +132,8 @@ class Particle {
             this.directionY = (this.directionY / speed) * maxSpeed;
         }
 
+        // Update individual hue
+        this.hue += 2; // Increment hue for color change effect per particle
 
         // Move particle
         this.x += this.directionX;
@@ -164,23 +164,14 @@ function init() {
     }
 }
 
-// Global hue for color cycling
-let hue = 0;
-
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-    // Fade effect for trails? The user mentioned "efeito visuais fodas" (cool visual effects).
-    // Let's keep it simple with clearRect for now to ensure performance, 
-    // unless "trails" are specifically requested again. 
-    // The previous prompt removed lines, so clean dots are expected.
-
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
     }
-    hue+=0.5; // Increment hue for color change effect
 }
 
 init();
