@@ -18,10 +18,22 @@ window.addEventListener('resize', function() {
     init();
 });
 
-// Handle mouse movement
+// Handle mouse movement and Parallax
 window.addEventListener('mousemove', function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
+    
+    // Parallax Effect
+    const shape1 = document.querySelector('.shape-1');
+    const shape2 = document.querySelector('.shape-2');
+    const shape3 = document.querySelector('.shape-3');
+    
+    let x = (window.innerWidth - event.pageX * 2) / 100;
+    let y = (window.innerHeight - event.pageY * 2) / 100;
+    
+    if(shape1) shape1.style.transform = `translateX(${x}px) translateY(${y}px)`;
+    if(shape2) shape2.style.transform = `translateX(${-x}px) translateY(${-y}px) rotate(45deg)`;
+    if(shape3) shape3.style.transform = `translateX(${x*2}px) translateY(${y*2}px)`;
 });
 
 // Handle mouse out
@@ -39,6 +51,18 @@ window.addEventListener('touchstart', function(event) {
 window.addEventListener('touchmove', function(event) {
     mouse.x = event.touches[0].clientX;
     mouse.y = event.touches[0].clientY;
+    
+    // Parallax for touch
+    const shape1 = document.querySelector('.shape-1');
+    const shape2 = document.querySelector('.shape-2');
+    const shape3 = document.querySelector('.shape-3');
+    
+    let x = (window.innerWidth - event.touches[0].clientX * 2) / 100;
+    let y = (window.innerHeight - event.touches[0].clientY * 2) / 100;
+    
+    if(shape1) shape1.style.transform = `translateX(${x}px) translateY(${y}px)`;
+    if(shape2) shape2.style.transform = `translateX(${-x}px) translateY(${-y}px) rotate(45deg)`;
+    if(shape3) shape3.style.transform = `translateX(${x*2}px) translateY(${y*2}px)`;
 });
 
 window.addEventListener('touchend', function() {
@@ -63,7 +87,7 @@ class Particle {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`; // Dynamic color
         ctx.fill();
     }
 
@@ -140,6 +164,9 @@ function init() {
     }
 }
 
+// Global hue for color cycling
+let hue = 0;
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
@@ -153,6 +180,7 @@ function animate() {
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
     }
+    hue+=0.5; // Increment hue for color change effect
 }
 
 init();
