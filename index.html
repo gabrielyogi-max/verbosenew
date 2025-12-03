@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiência Visual Imersiva</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="canvas-bg"></canvas>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <header>
+        <div class="logo">NEBULA</div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="hover-effect">Início</a></li>
+                <li><a href="#about" class="hover-effect">Sobre</a></li>
+                <li><a href="#projects" class="hover-effect">Projetos</a></li>
+                <li><a href="#contact" class="hover-effect">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="O Futuro é Agora">O Futuro é Agora</h1>
+                <p class="fade-in">Explore a dimensão onde design encontra a tecnologia.</p>
+                <button class="cta-button hover-effect">Começar a Jornada</button>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">Sobre Nós</h2>
+                <div class="cards-grid">
+                    <div class="card tilt-card">
+                        <h3>Inovação</h3>
+                        <p>Desafiando os limites do que é possível na web.</p>
+                    </div>
+                    <div class="card tilt-card">
+                        <h3>Design</h3>
+                        <p>Estética refinada para experiências inesquecíveis.</p>
+                    </div>
+                    <div class="card tilt-card">
+                        <h3>Performance</h3>
+                        <p>Velocidade e fluidez em cada interação.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" class="showcase">
+             <div class="container">
+                <h2 class="section-title">Visualizações</h2>
+                <div class="gallery">
+                    <div class="gallery-item"></div>
+                    <div class="gallery-item"></div>
+                    <div class="gallery-item"></div>
+                </div>
+             </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Nebula Design. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
